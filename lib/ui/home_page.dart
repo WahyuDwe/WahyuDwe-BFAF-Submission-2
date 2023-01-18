@@ -24,6 +24,14 @@ class HomePage extends StatelessWidget {
             },
             icon: const Icon(Icons.search),
           ),
+          IconButton(
+            onPressed:(){},
+            icon: const Icon(Icons.favorite),
+          ),
+          IconButton(
+            onPressed: (){},
+            icon: const Icon(Icons.settings),
+          )
         ],
       ),
       body: _buildList(),

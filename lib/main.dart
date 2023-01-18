@@ -1,4 +1,5 @@
 import 'package:bfaf_submission2/data/api/api_service.dart';
+import 'package:bfaf_submission2/provider/restaurant_db_provider.dart';
 import 'package:bfaf_submission2/provider/restaurant_detail_provider.dart';
 import 'package:bfaf_submission2/provider/restaurant_list_provider.dart';
 import 'package:bfaf_submission2/provider/restaurant_search_provider.dart';
@@ -7,6 +8,8 @@ import 'package:bfaf_submission2/ui/restaurant_detail_page.dart';
 import 'package:bfaf_submission2/ui/restaurant_search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'data/db/db_helper.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,6 +39,8 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<RestaurantSearchProvider>(
           create: (_) => RestaurantSearchProvider(apiService: apiService),
         ),
+        ChangeNotifierProvider<RestaurantDatabaseProvider>(
+            create: (_) => RestaurantDatabaseProvider(dbHelper: DatabaseHelper())),
       ],
       child: MaterialApp(
         title: 'Restaurant App',
@@ -48,7 +53,8 @@ class _MyAppState extends State<MyApp> {
           RestaurantDetailPage.routeName: (context) => RestaurantDetailPage(
                 restoId: ModalRoute.of(context)?.settings.arguments as String,
               ),
-          RestaurantSearchPage.routeName: (context) => const RestaurantSearchPage(),
+          RestaurantSearchPage.routeName: (context) =>
+              const RestaurantSearchPage(),
         },
       ),
     );

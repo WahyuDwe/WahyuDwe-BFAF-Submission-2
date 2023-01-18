@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:bfaf_submission2/data/model/restaurant_list.dart';
+import 'package:bfaf_submission2/provider/restaurant_db_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -52,6 +55,13 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
               );
             case StatusState.hasData:
               RestaurantListElement restaurant = state.data!.restaurant;
+              final responseFavorite = RestaurantListElement(
+                  id: restaurant.id,
+                  name: restaurant.name,
+                  description: restaurant.description,
+                  pictureId: restaurant.pictureId,
+                  city: restaurant.city,
+                  rating: restaurant.rating,);
               return SingleChildScrollView(
                 child: Column(
                   children: [
@@ -89,6 +99,45 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                                       Navigator.pop(context);
                                     },
                                   ),
+                                ),
+                                Consumer<RestaurantDatabaseProvider>(
+                                  builder: (context, provider, _) {
+                                    return FutureBuilder<bool>(
+                                      future:
+                                          provider.isFavorite(restaurant.id),
+                                      builder: (context, snapshot) {
+                                        var isFavorite = snapshot.data ?? false;
+                                        return isFavorite
+                                            ? CircleAvatar(
+                                                backgroundColor: Colors.black54,
+                                                child: IconButton(
+                                                  icon: const Icon(
+                                                    Icons.favorite,
+                                                    color: Colors.red,
+                                                  ),
+                                                  onPressed: () {
+                                                    provider.removeFavorite(
+                                                        restaurant.id);
+                                                    log('isFavorite $isFavorite');
+                                                  },
+                                                ),
+                                              )
+                                            : CircleAvatar(
+                                                backgroundColor: Colors.black54,
+                                                child: IconButton(
+                                                  icon: const Icon(
+                                                    Icons.favorite_border,
+                                                    color: Colors.white,
+                                                  ),
+                                                  onPressed: () {
+                                                    provider.addFavorite(responseFavorite);
+                                                    log('isFavorite $isFavorite');
+                                                  },
+                                                ),
+                                              );
+                                      },
+                                    );
+                                  },
                                 ),
                               ],
                             ),
@@ -154,7 +203,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                       child: ListView(
                         padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                         scrollDirection: Axis.horizontal,
-                        children: restaurant.menus.foods.map(
+                        children: restaurant.menus!.foods.map(
                           (menu) {
                             return Stack(
                               children: [
@@ -219,7 +268,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                       child: ListView(
                         padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                         scrollDirection: Axis.horizontal,
-                        children: restaurant.menus.drinks.map(
+                        children: restaurant.menus!.drinks.map(
                           (menu) {
                             return Stack(
                               children: [

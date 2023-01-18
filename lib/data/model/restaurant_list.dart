@@ -30,9 +30,8 @@ class RestaurantListElement {
     required this.description,
     required this.pictureId,
     required this.city,
-    required this.address,
     required this.rating,
-    required this.menus,
+    this.menus,
   });
 
   final String id;
@@ -40,9 +39,8 @@ class RestaurantListElement {
   final String description;
   final String pictureId;
   final String city;
-  final String address;
   final double rating;
-  final Menus menus;
+  final Menus? menus;
 
   factory RestaurantListElement.fromJson(Map<String, dynamic> json) =>
       RestaurantListElement(
@@ -52,7 +50,6 @@ class RestaurantListElement {
         pictureId: json["pictureId"],
         city: json["city"],
         rating: json["rating"].toDouble(),
-        address: json["address"] ?? "",
         menus: json['menus'] != null
             ? Menus.fromJson(json["menus"])
             : Menus(foods: [], drinks: []),
@@ -66,6 +63,5 @@ class RestaurantListElement {
         "pictureId": pictureId,
         "city": city,
         "rating": rating,
-        "address": address,
       };
 }
