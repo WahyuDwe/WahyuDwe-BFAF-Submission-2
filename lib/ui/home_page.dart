@@ -1,11 +1,13 @@
 import 'package:bfaf_submission2/provider/restaurant_list_provider.dart';
 import 'package:bfaf_submission2/ui/restaurant_detail_page.dart';
 import 'package:bfaf_submission2/ui/restaurant_search_page.dart';
+import 'package:bfaf_submission2/ui/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../data/model/restaurant_list.dart';
 import '../utils/result_state.dart';
+import 'favorite_page.dart';
 
 class HomePage extends StatelessWidget {
   static const routeName = '/home_page';
@@ -25,11 +27,15 @@ class HomePage extends StatelessWidget {
             icon: const Icon(Icons.search),
           ),
           IconButton(
-            onPressed:(){},
+            onPressed: () {
+              Navigator.pushNamed(context, RestaurantFavoritePage.routeName);
+            },
             icon: const Icon(Icons.favorite),
           ),
           IconButton(
-            onPressed: (){},
+            onPressed: () {
+              Navigator.pushNamed(context, SettingsPage.routeName);
+            },
             icon: const Icon(Icons.settings),
           )
         ],
