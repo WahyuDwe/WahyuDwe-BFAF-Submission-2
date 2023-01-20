@@ -90,7 +90,7 @@ class HomePage extends StatelessWidget {
         child: Row(
           children: [
             Hero(
-              tag: resto.pictureId,
+              tag: resto.pictureId!,
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(14.0),

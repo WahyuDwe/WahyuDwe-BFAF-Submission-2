@@ -8,6 +8,7 @@ import '../utils/result_state.dart';
 
 class RestaurantFavoritePage extends StatelessWidget {
   static const routeName = '/favorite_page';
+
   const RestaurantFavoritePage({Key? key}) : super(key: key);
 
   @override
@@ -64,21 +65,25 @@ class RestaurantFavoritePage extends StatelessWidget {
         },
         child: Row(
           children: [
-            Hero(
-              tag: resto.pictureId,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(14.0),
-                  bottomLeft: Radius.circular(14.0),
-                ),
-                child: Image.network(
-                  "https://restaurant-api.dicoding.dev/images/small/${resto.pictureId}",
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+            resto.pictureId != ''
+                ? Flexible(
+                  child: Hero(
+                      tag: resto.pictureId!,
+                      child: Image.network(
+                        'https://restaurant-api.dicoding.dev/images/small/${resto.pictureId}',
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                )
+                : const SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: Center(
+                      child: Text('No Image'),
+                    ),
+                  ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(10),

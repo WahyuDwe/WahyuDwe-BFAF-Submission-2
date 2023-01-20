@@ -13,14 +13,14 @@ class RestaurantList {
   int count;
   List<RestaurantListElement> restaurants;
 
-  factory RestaurantList.fromJson(Map<String, dynamic> json) =>
-      RestaurantList(
-          error: json["error"],
-          message: json["message"],
-          count: json["count"],
-          restaurants: (json["restaurants"] as List)
-              .map((x) => RestaurantListElement.fromJson(x))
-              .toList());
+  factory RestaurantList.fromJson(Map<String, dynamic> json) => RestaurantList(
+      error: json["error"],
+      message: json["message"],
+      count: json["count"],
+      restaurants: (json["restaurants"] as List)
+          .map((x) => RestaurantListElement.fromJson(x))
+          .where((element) => element.pictureId != null)
+          .toList());
 }
 
 class RestaurantListElement {
@@ -37,7 +37,7 @@ class RestaurantListElement {
   final String id;
   final String name;
   final String description;
-  final String pictureId;
+  final String? pictureId;
   final String city;
   final double rating;
   final Menus? menus;
@@ -55,8 +55,7 @@ class RestaurantListElement {
             : Menus(foods: [], drinks: []),
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "description": description,

@@ -68,7 +68,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                     Stack(
                       children: [
                         Hero(
-                          tag: restaurant.pictureId,
+                          tag: restaurant.pictureId!,
                           child: ClipRRect(
                             borderRadius: const BorderRadius.only(
                               bottomLeft: Radius.circular(14.0),

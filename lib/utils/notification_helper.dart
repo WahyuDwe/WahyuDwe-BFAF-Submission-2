@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:math';
+
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
@@ -29,7 +31,7 @@ class NotificationHelper {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: (String? payload) async {
       if (payload != null) {
-        log('notification payload: $payload');
+        print('notification payload: ' + payload);
       }
       selectNotificationSubject.add(payload ?? 'empty payload');
     });
@@ -50,10 +52,12 @@ class NotificationHelper {
         styleInformation: const DefaultStyleInformation(true, true));
     var platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics);
+    var randomRestaurant = Random().nextInt(restaurants.restaurants.length - 1);
+    var body = restaurants.restaurants[randomRestaurant].name;
     await flutterLocalNotificationsPlugin.show(
       0,
       '<b>New Restaurant</b>',
-      'There are ${restaurants.restaurants[0].name} new restaurants',
+      body,
       platformChannelSpecifics,
       payload: json.encode(restaurants.restaurants[0].toJson()),
     );
