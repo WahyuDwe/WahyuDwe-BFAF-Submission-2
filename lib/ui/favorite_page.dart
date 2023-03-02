@@ -69,11 +69,17 @@ class RestaurantFavoritePage extends StatelessWidget {
                 ? Flexible(
                   child: Hero(
                       tag: resto.pictureId!,
-                      child: Image.network(
-                        'https://restaurant-api.dicoding.dev/images/small/${resto.pictureId}',
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(14.0),
+                          bottomLeft: Radius.circular(14.0),
+                        ),
+                        child: Image.network(
+                          'https://restaurant-api.dicoding.dev/images/small/${resto.pictureId}',
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                 )
